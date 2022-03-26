@@ -17,6 +17,10 @@ This repo publishes scripts used in ["Project:Mozilla/Version Bump Guide"](https
 
    Diffs pre-determined files between two specified versions for a single product.
 
+* test_mozilla_products.sh
+
+   Does a few important test runs on specified software, e.g. with gcc, clang, lto, pgo...
+
 
 ## License
 
