@@ -5,6 +5,13 @@
 ###
 ### "emerge --sync" before running this!
 ###
+### Usage: 
+### DEVREPO=~/git/gentoo gentoo_mozilla_maintainer_check.sh
+###  where DEVREPO is the location to your development repository with git history present.
+###  defaults to `pwd`.
+
+
+: "${DEVREPO:=$(pwd)}"
 
 
 # Declare colours.
