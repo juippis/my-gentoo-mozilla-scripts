@@ -115,7 +115,7 @@ fi
 
 # pkgcheck checks
 
-cd ~/git/devgentoo || exit
+cd "${DEVREPO}" || exit
 mapfile -t pkgcheckscanpackages < <(git grep -l mozilla@gentoo.org '**/metadata.xml' |  cut -d/ -f1-2)
 
 echo ""
