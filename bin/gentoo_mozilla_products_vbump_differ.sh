@@ -1,16 +1,16 @@
 #!/bin/bash
 
-### Usage: mozilla_products_vbump_differ.sh product-ver1 product-ver2
+### Usage: gentoo_mozilla_products_vbump_differ.sh product-ver1 product-ver2
 ### Examples: 
-###   mozilla_products_vbump_differ.sh firefox-91.5.3 firefox-91.6.0
-###   mozilla_products_vbump_differ.sh nss 3.68.3 nss-3.68.4
-###   mozilla_products_vbump_differ.sh nss-3.76 nss-3.77
-###   mozilla_products_vbump_differ.sh spidermonkey-91.6.0 spidermonkey-91.7.0
-###   mozilla_products_vbump_differ.sh thunderbird-91.6.2 thunderbird-91.7.0
+###   gentoo_mozilla_products_vbump_differ.sh firefox-91.5.3 firefox-91.6.0
+###   gentoo_mozilla_products_vbump_differ.sh nss 3.68.3 nss-3.68.4
+###   gentoo_mozilla_products_vbump_differ.sh nss-3.76 nss-3.77
+###   gentoo_mozilla_products_vbump_differ.sh spidermonkey-91.6.0 spidermonkey-91.7.0
+###   gentoo_mozilla_products_vbump_differ.sh thunderbird-91.6.2 thunderbird-91.7.0
 ### 
 ### Note: 
 ###   You can set your portage's DISTDIR like this:
-###     DISTDIR=/my/custom/distdir mozilla_products_vbump_differ.sh ...
+###     DISTDIR=/my/custom/distdir gentoo_mozilla_products_vbump_differ.sh ...
 ###
 ###   by default, `portageq envvar 'DISTDIR'` will be used.
 ###
