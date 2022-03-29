@@ -242,8 +242,8 @@ else
 fi
 
 
-mkdir -p /var/tmp/mozillaproducts || exit
-cd /var/tmp/mozillaproducts || exit
+mkdir -p /tmp/mozillaproducts || exit
+cd /tmp/mozillaproducts || exit
 
 
 if [[ ${firefoxbump} -eq 1 ]]; then
