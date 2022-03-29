@@ -295,7 +295,7 @@ if [[ ${nssbump} -eq 1 ]]; then
 		if [[ -f ${DISTDIR}/${1}.tar.gz ]]; then
 			cp "${DISTDIR}"/${1}.tar.gz .
 		else
-			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver1/./_}_RTM/src/${1}.tar.gz
+			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver1//./_}_RTM/src/${1}.tar.gz
 		fi
 	fi
 
@@ -303,7 +303,7 @@ if [[ ${nssbump} -eq 1 ]]; then
 		if [[ -f ${DISTDIR}/${2}.tar.gz ]]; then
 			cp "${DISTDIR}"/${2}.tar.gz .
 		else
-			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver2/./_}_RTM/src/${2}.tar.gz
+			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver2//./_}_RTM/src/${2}.tar.gz
 		fi
 	fi
 
