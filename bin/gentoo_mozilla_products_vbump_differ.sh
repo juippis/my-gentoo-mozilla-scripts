@@ -37,6 +37,7 @@ firefoxdiffarray=(
 	aclocal.m4
 	build/build_virtualenv_packages.txt
 	build/common_virtualenv_packages.txt
+	build/docs/
 	build/mach_initialize.py
 	build/mach_virtualenv_packages.txt
 	build/moz.configure
