@@ -336,7 +336,7 @@ if [[ ${spidermonkeybump} -eq 1 ]]; then
 		if [[ -f ${DISTDIR}/firefox-${ver2}.source.tar.xz ]]; then
 			cp "${DISTDIR}"/firefox-${ver2}esr.source.tar.xz .
 		else
-			wget https://archive.mozilla.org/pub/firefox/releases/${ver1}esr/source/firefox-${ver2}esr.source.tar.xz
+			wget https://archive.mozilla.org/pub/firefox/releases/${ver2}esr/source/firefox-${ver2}esr.source.tar.xz
 		fi
 	fi
 
