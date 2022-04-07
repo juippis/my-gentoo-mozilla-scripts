@@ -11,11 +11,18 @@
 ### Note: 
 ###   You can set your portage's DISTDIR like this:
 ###     DISTDIR=/my/custom/distdir gentoo_mozilla_products_vbump_differ.sh ...
+### 
+###   You can change the tmpdir with:
+###   MOZSHTMPDIR=/var/tmp/customdir gentoo_mozilla_products_vbump_differ.sh ...
 ###
-###   by default, `portageq envvar 'DISTDIR'` will be used.
+###   By default, `portageq envvar 'DISTDIR'` will be used for DISTDIR.
+###   And /tmp/mozillaproducts for MOZSHTMPDIR.
+###
+###   Make sure your user is in "portage" group and has write access to DISTDIR.
 ###
 
 : "${DISTDIR:=$(portageq envvar 'DISTDIR')}"
+: "${MOZSHTMPDIR:=/tmp/mozillaproducts}"
 
 
 firefoxbump=0
@@ -243,146 +250,168 @@ else
 fi
 
 
-mkdir -p /tmp/mozillaproducts || exit
-cd /tmp/mozillaproducts || exit
+mkdir -p "${MOZSHTMPDIR}" || exit
+cd "${MOZSHTMPDIR}" || exit
 
 
 if [[ ${firefoxbump} -eq 1 ]]; then
-	if [[ ! -f ./${1}.source.tar.xz ]] && 
-	[[ ! -f ./${1}esr.source.tar.xz ]]; then
-		if [[ -f ${DISTDIR}/${1}.source.tar.xz ]]; then
-			cp "${DISTDIR}"/${1}.source.tar.xz .
-		elif [[ -f ${DISTDIR}/${1}esr.source.tar.xz ]]; then
-			cp "${DISTDIR}"/${1}esr.source.tar.xz .
-		else
-			wget https://archive.mozilla.org/pub/firefox/releases/${ver1}/source/firefox-${ver1}.source.tar.xz
-			wget https://archive.mozilla.org/pub/firefox/releases/${ver1}esr/source/firefox-${ver1}esr.source.tar.xz
-		fi
-	fi
-	
-    if [[ ! -f ./${2}.source.tar.xz ]] && 
-    [[ ! -f ./${2}esr.source.tar.xz ]]; then
-        if [[ -f ${DISTDIR}/${2}.source.tar.xz ]]; then
-            cp "${DISTDIR}"/${2}.source.tar.xz .
-        elif [[ -f ${DISTDIR}/${2}esr.source.tar.xz ]]; then
-            cp "${DISTDIR}"/${2}esr.source.tar.xz .
-        else
-            wget https://archive.mozilla.org/pub/firefox/releases/${ver2}/source/firefox-${ver2}.source.tar.xz
-            wget https://archive.mozilla.org/pub/firefox/releases/${ver2}esr/source/firefox-${ver2}esr.source.tar.xz
-		fi
-	fi
+	cd "${MOZSHTMPDIR}" || exit
 
 	if [[ ! -d ${1} ]]; then
-		tar xf ./${1}.source.tar.xz || tar xf ./${1}esr.source.tar.xz
-	fi
-	if [[ ! -d ${2} ]]; then
-		tar xf ./${2}.source.tar.xz || tar xf ./${2}esr.source.tar.xz
+		if [[ -f ${DISTDIR}/${1}.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${1}.source.tar.xz"
+		elif [[ -f ${DISTDIR}/${1}esr.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${1}esr.source.tar.xz"
+		else
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver1}"/source/firefox-"${ver1}".source.tar.xz
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver1}"esr/source/firefox-"${ver1}"esr.source.tar.xz
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/${1}.source.tar.xz" || tar xf "${DISTDIR}/${1}esr.source.tar.xz"
+		fi
 	fi
 
-	rm ./${1}_vs_${2}.txt
-	touch ./${1}_vs_${2}.txt
+	if [[ ! -d ${2} ]]; then
+		if [[ -f ${DISTDIR}/${2}.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${2}.source.tar.xz"
+		elif [[ -f ${DISTDIR}/${2}esr.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${2}esr.source.tar.xz"
+		else
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver2}"/source/firefox-"${ver2}".source.tar.xz
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver2}"esr/source/firefox-"${ver2}"esr.source.tar.xz
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/${2}.source.tar.xz" || tar xf "${DISTDIR}/${2}esr.source.tar.xz"
+		fi
+	fi
+
+	cd "${MOZSHTMPDIR}" || exit
+
+	rm -f "./${1}_vs_${2}.txt"
+	touch "./${1}_vs_${2}.txt"
 
 	for i in "${firefoxdiffarray[@]}"; do
-		diff -Naur ${1}/"${i}" ${2}/"${i}" >> ./${1}_vs_${2}.txt
+		diff -Naur "${1}/${i}" "${2}/${i}" >> "./${1}_vs_${2}.txt"
 	done
 
-	echo "./${1}_vs_${2}.txt was made for later reviewing."
-	less ./${1}_vs_${2}.txt
+	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
+	less "./${1}_vs_${2}.txt"
 fi
 
 
 if [[ ${nssbump} -eq 1 ]]; then
-	if [[ ! -f ./${1}.tar.gz ]]; then
+	cd "${MOZSHTMPDIR}" || die
+
+	if [[ ! -d ${1} ]]; then
 		if [[ -f ${DISTDIR}/${1}.tar.gz ]]; then
-			cp "${DISTDIR}"/${1}.tar.gz .
+			tar -xzf "${DISTDIR}/${1}.tar.gz"
 		else
-			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver1//./_}_RTM/src/${1}.tar.gz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_"${ver1//./_}"_RTM/src/"${1}".tar.gz || exit
+			cd "${MOZSHTMPDIR}" || die
+			tar -xzf "${DISTDIR}/${1}.tar.gz"
 		fi
 	fi
 
-	if [[ ! -f ./${2}.tar.gz ]]; then
+	if [[ ! -d ${2} ]]; then
 		if [[ -f ${DISTDIR}/${2}.tar.gz ]]; then
-			cp "${DISTDIR}"/${2}.tar.gz .
+			tar -xzf "${DISTDIR}/${2}.tar.gz"
 		else
-			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_${ver2//./_}_RTM/src/${2}.tar.gz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/security/nss/releases/NSS_"${ver2//./_}"_RTM/src/"${2}".tar.gz || exit
+			cd "${MOZSHTMPDIR}" || die
+			tar -xzf "${DISTDIR}/${2}.tar.gz"
 		fi
 	fi
 
-	[[ ! -d ${1} ]] && tar -xzf ./${1}.tar.gz
-	[[ ! -d ${2} ]] && tar -xzf ./${2}.tar.gz
+	cd "${MOZSHTMPDIR}" || die
 
-	rm -f ./${1}_vs_${2}.txt
-	touch ./${1}_vs_${2}.txt
+	rm -f "./${1}_vs_${2}.txt"
+	touch "./${1}_vs_${2}.txt"
 
 	for l in "${nssdiffarray[@]}"; do
-		diff -Naur ${1}/"${l}" ${2}/"${l}" >> ./${1}_vs_${2}.txt
+		diff -Naur "${1}/${l}" "${2}/${l}" >> "./${1}_vs_${2}.txt"
 	done
 
-	echo "./${1}_vs_${2}.txt was made for later reviewing."
-	less ./${1}_vs_${2}.txt
+	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
+	less "./${1}_vs_${2}.txt"
 fi
 
 
 if [[ ${spidermonkeybump} -eq 1 ]]; then
-	if [[ ! -f ./firefox-${ver1}esr.source.tar.xz ]]; then
+	cd "${MOZSHTMPDIR}" || exit
+
+	if [[ ! -d firefox-${ver1} ]]; then
 		if [[ -f ${DISTDIR}/firefox-${ver1}esr.source.tar.xz ]]; then
-			cp "${DISTDIR}"/firefox-${ver1}esr.source.tar.xz .
+			tar xf "${DISTDIR}/firefox-${ver1}esr.source.tar.xz"
 		else
-			wget https://archive.mozilla.org/pub/firefox/releases/${ver1}esr/source/firefox-${ver1}esr.source.tar.xz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver1}"esr/source/firefox-"${ver1}"esr.source.tar.xz || exit
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/firefox-${ver1}esr.source.tar.xz"
 		fi
 	fi
 
-	if [[ ! -f ./firefox-${ver2}esr.source.tar.xz ]]; then
-		if [[ -f ${DISTDIR}/firefox-${ver2}.source.tar.xz ]]; then
-			cp "${DISTDIR}"/firefox-${ver2}esr.source.tar.xz .
+	if [[ ! -d firefox-${ver2} ]]; then
+		if [[ -f ${DISTDIR}/firefox-${ver2}esr.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/firefox-${ver2}esr.source.tar.xz"
 		else
-			wget https://archive.mozilla.org/pub/firefox/releases/${ver2}esr/source/firefox-${ver2}esr.source.tar.xz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/firefox/releases/"${ver2}"esr/source/firefox-"${ver2}"esr.source.tar.xz || exit
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/firefox-${ver2}esr.source.tar.xz"
 		fi
 	fi
 
-	[[ ! -d firefox-${ver1} ]] && tar xf ./firefox-${ver1}esr.source.tar.xz
-	[[ ! -d firefox-${ver2} ]] && tar xf ./firefox-${ver2}esr.source.tar.xz
+    cd "${MOZSHTMPDIR}" || exit
 
-	rm -f ./${1}_vs_${2}.txt
-	touch ./${1}_vs_${2}.txt
+	rm -f "./${1}_vs_${2}.txt"
+	touch "./${1}_vs_${2}.txt"
 
 	for j in "${spidermonkeydiffarray[@]}"; do
-		diff -Naur firefox-${ver1}/"${j}" firefox-${ver2}/"${j}" >> ./${1}_vs_${2}.txt
+		diff -Naur "firefox-${ver1}/${j}" "firefox-${ver2}/${j}" >> "./${1}_vs_${2}.txt"
 	done
 
-	echo "./${1}_vs_${2}.txt was made for later reviewing."
-	less ./${1}_vs_${2}.txt
+	echo "${MOZSHTMPDIR}./${1}_vs_${2}.txt was made for later reviewing."
+	less "./${1}_vs_${2}.txt"
 fi
 
 
 if [[ ${thunderbirdbump} -eq 1 ]]; then
-	if [[ ! -f ./${1}.source.tar.xz ]]; then
+	cd "${MOZSHTMPDIR}" || exit
+
+	if [[ ! -d ${1} ]]; then
 		if [[ -f ${DISTDIR}/${1}.source.tar.xz ]]; then
-			cp "${DISTDIR}"/${1}.source.tar.xz .
+			tar xf "${DISTDIR}/${1}.source.tar.xz"
 		else
-			wget https://archive.mozilla.org/pub/thunderbird/releases/${ver1}/source/${1}.source.tar.xz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"/source/"${1}".source.tar.xz || exit
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/${1}.source.tar.xz"
 		fi
 	fi
 
-	if [[ ! -f ./${2}.source.tar.xz ]]; then
+	if [[ ! -d ${2} ]]; then
 		if [[ -f ${DISTDIR}/${2}.source.tar.xz ]]; then
-			cp "${DISTDIR}"/${2}.source.tar.xz .
+			tar xf "${DISTDIR}/${2}.source.tar.xz"
 		else
-			wget https://archive.mozilla.org/pub/thunderbird/releases/${ver2}/source/${2}.source.tar.xz
+			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"/source/"${2}".source.tar.xz || exit
+			cd "${MOZSHTMPDIR}" || exit
+			tar xf "${DISTDIR}/${2}.source.tar.xz"
 		fi
 	fi
 
-	[[ ! -d ${1} ]] && tar xf ./${1}.source.tar.xz
-	[[ ! -d ${2} ]] && tar xf ./${2}.source.tar.xz
+	cd "${MOZSHTMPDIR}" || exit
 
-	rm -f ./${1}_vs_${2}.txt
-	touch ./${1}_vs_${2}.txt
+	rm -f "./${1}_vs_${2}.txt"
+	touch "./${1}_vs_${2}.txt"
 
 	for k in "${thunderbirddiffarray[@]}"; do
-		diff -Naur ${1}/"${k}" ${2}/"${k}" >> ./${1}_vs_${2}.txt
+		diff -Naur "${1}/${k}" "${2}/${k}" >> "./${1}_vs_${2}.txt"
 	done
 
-	echo "./${1}_vs_${2}.txt was made for later reviewing."
-	less ./${1}_vs_${2}.txt
+	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
+	less "./${1}_vs_${2}.txt"
 fi
 
