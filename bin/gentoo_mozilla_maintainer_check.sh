@@ -77,7 +77,7 @@ nsprlatest=$(curl -s "https://repology.org/project/nspr/history" | grep -oP '(?<
 [[ $nsprlatest != "$nsprgentoo" ]] &&
 	outdatedarray+=( "NSPR ${OUT} https://archive.mozilla.org/pub/nspr/releases/ ${nsprlatest}" )
 
-nssesrlatest=$(curl -s "https://wiki.mozilla.org/NSS:Release_Versions" | grep "(ESR)" | head -n1 | grep -oP '(?<=<b>).*(?=</b>)')
+nssesrlatest=$(curl -s https://firefox-source-docs.mozilla.org/security/nss/releases/index.html | grep "(ESR)" | head -n1 | grep -oP '(?<=NSS ).*(?= \(ESR)')
 if ! grep -q "${nssesrlatest}" < <(equery y dev-libs/nss); then
 	outdatedarray+=( "NSS (ESR) ${OUT} https://wiki.mozilla.org/NSS:Release_Versions ${nssesrlatest}" )
 fi
