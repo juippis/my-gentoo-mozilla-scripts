@@ -372,7 +372,7 @@ if [[ ${spidermonkeybump} -eq 1 ]]; then
 		diff -Naur "firefox-${ver1}/${j}" "firefox-${ver2}/${j}" >> "./${1}_vs_${2}.txt"
 	done
 
-	echo "${MOZSHTMPDIR}./${1}_vs_${2}.txt was made for later reviewing."
+	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
 	less "./${1}_vs_${2}.txt"
 fi
 
