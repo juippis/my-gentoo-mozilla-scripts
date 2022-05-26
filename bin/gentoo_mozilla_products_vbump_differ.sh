@@ -170,7 +170,16 @@ nssdiffarray=(
 	nss/coreconf/config.mk
 )
 
-nsprdiffarray=()
+nsprdiffarray=(
+	nspr/configure
+	nspr/configure.in
+	nspr/Makefile.in
+	nspr/config/rules.mk
+	nspr/config/config.mk
+	nspr/config/Makefile.in
+	nspr/config/nspr-config.in
+	nspr/config/system-headers
+)
 
 spidermonkeydiffarray=(
 	js/moz.build
@@ -331,6 +340,45 @@ if [[ ${nssbump} -eq 1 ]]; then
 
 	for l in "${nssdiffarray[@]}"; do
 		diff -Naur "${1}/${l}" "${2}/${l}" >> "./${1}_vs_${2}.txt"
+	done
+
+	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
+	less "./${1}_vs_${2}.txt"
+fi
+
+
+if [[ ${nsprbump} -eq 1 ]]; then
+	cd "${MOZSHTMPDIR}" || die
+
+	if [[ ! -d ${1} ]]; then
+        if [[ -f ${DISTDIR}/${1}.tar.gz ]]; then
+            tar -xzf "${DISTDIR}/${1}.tar.gz"
+        else
+            cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/nspr/releases/v"${ver1}"/src/"${1}".tar.gz
+			cd "${MOZSHTMPDIR}" || die
+			tar -xzf "${DISTDIR}/${1}.tar.gz"
+		fi
+	fi
+
+	if [[ ! -d ${2} ]]; then
+        if [[ -f ${DISTDIR}/${2}.tar.gz ]]; then
+            tar -xzf "${DISTDIR}/${2}.tar.gz"
+        else
+            cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/nspr/releases/v"${ver2}"/src/"${2}".tar.gz
+            cd "${MOZSHTMPDIR}" || die
+            tar -xzf "${DISTDIR}/${2}.tar.gz"
+        fi
+    fi
+
+	cd "${MOZSHTMPDIR}" || die
+
+	rm -f "./${1}_vs_${2}.txt"
+	touch "./${1}_vs_${2}.txt"
+
+	for m in "${nsprdiffarray[@]}"; do
+		diff -Naur "${1}/${m}" "${2}/${m}" >> "./${1}_vs_${2}.txt"
 	done
 
 	echo "${MOZSHTMPDIR}/${1}_vs_${2}.txt was made for later reviewing."
