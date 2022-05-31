@@ -54,6 +54,7 @@ firefoxdiffarray=(
 	config/Makefile.in
 	config/baseconfig.mk
 	config/config.mk
+	config/system-headers.mozbuild
 	nsprpub/configure
 	old-configure.in
 	python/docs/index.rst
