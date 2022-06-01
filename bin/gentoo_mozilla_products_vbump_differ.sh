@@ -161,14 +161,15 @@ firefoxdiffarray=(
 nssdiffarray=(
 	nss/Makefile
 	nss/build.sh
-	nss/exports.gyp
-	nss/mach
-	nss/nss.gyp
 	nss/coreconf/Linux.mk
 	nss/coreconf/Makefile
 	nss/coreconf/README
 	nss/coreconf/arch.mk
 	nss/coreconf/config.mk
+	nss/doc
+	nss/exports.gyp
+	nss/mach
+	nss/nss.gyp
 )
 
 nsprdiffarray=(
