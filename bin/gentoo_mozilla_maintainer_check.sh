@@ -141,7 +141,7 @@ echo "Packages that have PYTHON_COMPAT available:"
 echo ""
 
 for l in "${pkgcheckscanpackages[@]}"; do
-    pkgcheck --color true scan "${l}" -k PythonCompatUpdate
+    pkgcheck --color true scan "${l}" -k PythonCompatUpdate -f latest
 done
 
 sleep 1
