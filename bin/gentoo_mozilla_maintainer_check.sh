@@ -32,7 +32,7 @@ pkgcheckscanpackages=()
 
 gentooVersionCheck() {
     local versionResult
-    versionResult=$(equery y "${1}" | sed -e '/.*9999.*/d' -e 's/\[I\]//g' -e 's/-r[0-9]*//' | tail -n1 | cut -d "|" -f 1 | sed 's/ //g')
+    versionResult=$(equery y "${1}" | sed -e '/.*9999.*/d' -e 's/\[I\]//g' -e 's/\[M\]//g' -e 's/-r[0-9]*//' | tail -n1 | cut -d "|" -f 1 | sed 's/ //g')
     echo "${versionResult}"
 }
 
