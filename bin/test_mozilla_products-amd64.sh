@@ -44,7 +44,7 @@ unset USE
 # Skip +pgo since it's been tested already, and to save time.
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope once \
 	--report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
-	--append-required-use '!pgo' --max-use-combinations 4 -p "=${1}"
+	--append-required-use '!pgo' --max-use-combinations 6 -p "=${1}"
 
 errors_and_qa_notices.sh
 grep -r exit_code /var/tmp/portage/vbslogs/ | grep "1,"
