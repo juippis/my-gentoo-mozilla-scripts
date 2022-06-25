@@ -80,13 +80,14 @@ nsprlatest=$(curl -s "https://repology.org/project/nspr/history" | grep -oP '(?<
 
 nssesrlatest=$(curl -s https://firefox-source-docs.mozilla.org/security/nss/releases/index.html | grep "(ESR)" | head -n1 | grep -oP '(?<=NSS ).*(?= \(ESR)')
 if ! grep -q "${nssesrlatest}" < <(equery y dev-libs/nss); then
-	outdatedarray+=( "NSS (ESR) ${OUT} https://wiki.mozilla.org/NSS:Release_Versions ${nssesrlatest}" )
+	outdatedarray+=( "NSS (ESR) ${OUT} https://wiki.mozilla.org/NSS:Release_Versions ${nssesrlatest}" ) && 
 	outdatedarray+=( "  https://hg.mozilla.org/projects/nss/file/tip/doc/rst/releases" )
 fi
 
 nsslatest=$(curl -s "https://repology.org/project/nss/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $nsslatest != "$nssgentoo" ]] &&
-	outdatedarray+=( "NSS ${OUT} https://archive.mozilla.org/pub/security/nss/releases/ ${nsslatest}" )
+	outdatedarray+=( "NSS ${OUT} https://archive.mozilla.org/pub/security/nss/releases/ ${nsslatest}" ) && 
+	outdatedarray+=( "  https://hg.mozilla.org/projects/nss/file/tip/doc/rst/releases" )
 
 nsspemlatest=$(curl -s https://api.github.com/repos/kdudka/nss-pem/tags | grep -o "\"name\".*" | head -n1 | grep -oP '([0-9]+\.?)+')
 [[ $nsspemlatest != "$nsspemgentoo" ]] &&
