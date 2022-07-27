@@ -10,8 +10,8 @@
 ### PGO is not supported in x86, and skip lto due to the memory requirements and 
 ### intensive swapping it causes.
 
-# With GCC
-export USE="-clang"
+# With GCC, get dependencies right on the first run
+export USE="-clang X wayland"
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope never \
 	--report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"

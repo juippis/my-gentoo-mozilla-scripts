@@ -12,8 +12,8 @@
 ### focus on them explicitly, and ignore 'pgo' for "regular" runs.
 ###
 
-# With gcc
-export USE="-clang"
+# With gcc, get dependencies installed right on the first run
+export USE="-clang X wayland"
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope never \
 	--report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"
