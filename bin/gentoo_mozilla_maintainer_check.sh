@@ -40,6 +40,7 @@ gentooVersionCheck() {
 cbindgengentoo=$(gentooVersionCheck "dev-util/cbindgen")
 firefoxrapidgentoo=$(gentooVersionCheck "www-client/firefox")
 jemallocgentoo=$(gentooVersionCheck "dev-libs/jemalloc")
+librnpgentoo=$(gentooVersionCheck "dev-util/librnp")
 nsprgentoo=$(gentooVersionCheck "dev-libs/nspr")
 nssgentoo=$(gentooVersionCheck "dev-libs/nss")
 nsspemgentoo=$(gentooVersionCheck "dev-libs/nss-pem")
@@ -73,6 +74,10 @@ firefoxrapidlatest=$(curl -s "https://repology.org/project/firefox/history" | gr
 jemalloclatest=$(curl -s https://api.github.com/repos/jemalloc/jemalloc/tags | grep -o "\"name\".*" | head -n1 | grep -oP '([0-9]+\.?)+')
 [[ $jemalloclatest != "$jemallocgentoo" ]] &&
 	outdatedarray+=( "jemalloc ${OUT} https://github.com/jemalloc/jemalloc/tags" )
+
+librnplatest=$(curl -s https://api.github.com/repos/rnpgp/rnp/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
+[[ $librnplatest != "$librnpgentoo" ]] &&
+	outdatedarray+=( "librnp ${OUT} https://github.com/rnpgp/rnp/tags" )
 
 nsprlatest=$(curl -s "https://repology.org/project/nspr/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $nsprlatest != "$nsprgentoo" ]] &&
