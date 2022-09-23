@@ -12,6 +12,10 @@
 ### focus on them explicitly, and ignore 'pgo' for "regular" runs.
 ###
 
+# Recently (105+) had some clang segfaults randomly when this was not set.
+echo "sys-libs/compiler-rt clang" >> /etc/portage/package.use/compiler-rt
+echo "sys-libs/compiler-rt-sanitizers clang" >> /etc/portage/package.use/compiler-rt
+
 # With gcc, get dependencies installed right on the first run
 export USE="-clang X wayland"
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope never \
