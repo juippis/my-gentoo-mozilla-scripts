@@ -16,17 +16,17 @@
 echo "sys-libs/compiler-rt clang" >> /etc/portage/package.use/compiler-rt
 echo "sys-libs/compiler-rt-sanitizers clang" >> /etc/portage/package.use/compiler-rt
 
-# With gcc, get dependencies installed right on the first run
-export USE="-clang X wayland"
+# With clang, get dependencies installed right on the first run
+export USE="clang X wayland"
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope never \
-	--report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
+	--report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"
 unset USE
 
-# With clang
-export USE="clang"
+# With gcc
+export USE="-clang X wayland"
 pkg-testing-tool --extra-env-file 'test.conf' --test-feature-scope never \
-	--report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
+	--report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"
 unset USE
 
