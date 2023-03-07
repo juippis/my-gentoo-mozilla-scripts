@@ -18,35 +18,35 @@ echo "sys-libs/compiler-rt-sanitizers clang" >> /etc/portage/package.use/compile
 
 # With clang, get dependencies installed right on the first run
 export USE="clang X wayland"
-pkg-testing-tool --append-emerge '--autounmask=n --oneshot' --extra-env-file 'test.conf' \
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"
 unset USE
 
 # With gcc
 export USE="-clang X wayland"
-pkg-testing-tool --append-emerge '--autounmask=n --oneshot' --extra-env-file 'test.conf' \
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 1 -p "=${1}"
 unset USE
 
 # With gcc+lto+pgo
 export USE="-clang lto pgo"
-pkg-testing-tool --append-emerge '--autounmask=n --oneshot' --extra-env-file 'test.conf' \
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-gcc-ltopgo.json \
     --max-use-combinations 1 -p "=${1}"
 unset USE
 
 # with clang+lto+pgo
 export USE="clang lto pgo"
-pkg-testing-tool --append-emerge '--autounmask=n --oneshot' --extra-env-file 'test.conf' \
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang-ltopgo.json \
     --max-use-combinations 1 -p "=${1}"
 unset USE
 
 # With randomized USE flags, usually lto gets tested without pgo here.
 # Skip +pgo since it's been tested already, and to save time.
-pkg-testing-tool --append-emerge '--autounmask=n --oneshot' --extra-env-file 'test.conf' \
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope once --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
 	--append-required-use '!pgo' --max-use-combinations 6 -p "=${1}"
 
