@@ -31,14 +31,14 @@ pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'te
 unset USE
 
 # With gcc+lto+pgo
-export USE="-clang lto pgo"
+export USE="-clang lto pgo X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-gcc-ltopgo.json \
     --max-use-combinations 1 -p "=${1}"
 unset USE
 
 # with clang+lto+pgo
-export USE="clang lto pgo"
+export USE="clang lto pgo X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang-ltopgo.json \
     --max-use-combinations 1 -p "=${1}"
