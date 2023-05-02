@@ -30,7 +30,7 @@ unset USE
 
 # With randomized USE flags
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
-	--test-feature-scope once --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
+	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 4 -p "=${1}"
 
 errors_and_qa_notices.sh
