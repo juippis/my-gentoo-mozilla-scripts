@@ -44,6 +44,7 @@ nsprgentoo=$(gentooVersionCheck "dev-libs/nspr")
 nssgentoo=$(gentooVersionCheck "dev-libs/nss")
 nsspemgentoo=$(gentooVersionCheck "dev-libs/nss-pem")
 openh264gentoo=$(gentooVersionCheck "media-libs/openh264")
+sexpgentoo=$(gentooVersionCheck "dev-libs/sexp")
 spidermonkeygentoo=$(gentooVersionCheck "dev-lang/spidermonkey")
 thunderbirdgentoo=$(gentooVersionCheck "mail-client/thunderbird")
 
@@ -97,6 +98,10 @@ openh264latest=$(curl -s https://api.github.com/repos/cisco/openh264/releases/la
 [[ $openh264latest != "$openh264gentoo" ]] &&
 	outdatedarray+=( "openh264 ${OUT} https://github.com/cisco/openh264/releases" ) &&
 	outdatedarray+=( "	https://github.com/mozilla/gmp-api/tags" )
+
+sexplatest=$(curl -s https://api.github.com/repos/rnpgp/sexp/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
+[[ $sexplatest != "$sexpgentoo" ]] &&
+	outdatedarray+=( "sexp ${OUT} https://github.com/rnpgp/sexp/releases" )
 
 spidermonkeylatest=$(curl -s "https://repology.org/project/spidermonkey/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $spidermonkeylatest != "$spidermonkeygentoo" ]] &&
