@@ -51,9 +51,9 @@ thunderbirdgentoo=$(gentooVersionCheck "mail-client/thunderbird")
 # openh264gentoo=$(gentooVersionCheck "media-libs/openh264" | sed 's/_p.*//')
 
 
-cbindgenlatest=$(curl -s https://api.github.com/repos/eqrion/cbindgen/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
+cbindgenlatest=$(curl -s https://api.github.com/repos/mozilla/cbindgen/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
 [[ $cbindgenlatest != "$cbindgengentoo" ]] &&
-	outdatedarray+=( "cbindgen ${OUT} https://github.com/eqrion/cbindgen/tags" )
+	outdatedarray+=( "cbindgen ${OUT} https://github.com/mozilla/cbindgen/tags" )
 
 # Match Firefox-ESR to packaged one in repo:
 # firefoxesrlatest=$(curl -s https://archive.mozilla.org/pub/firefox/releases/ | grep "esr/" | tail -2 | head -1 | grep -oP '(?<=esr/">).*(?=/</a>)' | cut -d"e" -f1)
