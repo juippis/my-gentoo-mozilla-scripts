@@ -52,7 +52,7 @@ thunderbirdgentoo=$(gentooVersionCheck "mail-client/thunderbird")
 # openh264gentoo=$(gentooVersionCheck "media-libs/openh264" | sed 's/_p.*//')
 
 
-cbindgenlatest=$(curl -s https://api.github.com/repos/mozilla/cbindgen/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
+cbindgenlatest=$(curl -s https://api.github.com/repos/mozilla/cbindgen/tags | grep -oP '([0-9]+\.?)+' | head -n1)
 [[ $cbindgenlatest != "$cbindgengentoo" ]] &&
 	outdatedarray+=( "cbindgen ${OUT} https://github.com/mozilla/cbindgen/tags" )
 
