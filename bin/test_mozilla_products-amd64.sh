@@ -46,9 +46,11 @@ unset USE
 
 # With randomized USE flags, usually lto gets tested without pgo here.
 # Skip +pgo since it's been tested already, and to save time.
+export USE="X"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
 	--append-required-use '!pgo' --max-use-combinations 6 -p "=${1}"
+unset USE
 
 errors_and_qa_notices.sh
 grep -r exit_code /var/tmp/portage/vbslogs/ | grep "1,"

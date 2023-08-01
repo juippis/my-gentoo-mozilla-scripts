@@ -29,9 +29,11 @@ pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'te
 unset USE
 
 # With randomized USE flags
+export USE="X"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
 	--append-required-use '!lto !pgo' --max-use-combinations 4 -p "=${1}"
+unset USE
 
 errors_and_qa_notices.sh
 grep -r exit_code /var/tmp/portage/vbslogs/ | grep "1,"
