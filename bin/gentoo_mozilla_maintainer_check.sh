@@ -43,6 +43,7 @@ librnpgentoo=$(gentooVersionCheck "dev-util/librnp")
 nsprgentoo=$(gentooVersionCheck "dev-libs/nspr")
 nssgentoo=$(gentooVersionCheck "dev-libs/nss")
 nsspemgentoo=$(gentooVersionCheck "dev-libs/nss-pem")
+nvidiavaapidrivergentoo=$(gentooVersionCheck "media-libs/nvidia-vaapi-driver")
 openh264gentoo=$(gentooVersionCheck "media-libs/openh264")
 sexppgentoo=$(gentooVersionCheck "dev-libs/sexpp")
 spidermonkeygentoo=$(gentooVersionCheck "dev-lang/spidermonkey")
@@ -93,6 +94,10 @@ nsslatest=$(curl -s "https://repology.org/project/nss/history" | grep -oP '(?<=c
 nsspemlatest=$(curl -s https://api.github.com/repos/kdudka/nss-pem/tags | grep -o "\"name\".*" | head -n1 | grep -oP '([0-9]+\.?)+')
 [[ $nsspemlatest != "$nsspemgentoo" ]] &&
 	outdatedarray+=( "nss-pem ${OUT} https://github.com/kdudka/nss-pem/tags" )
+
+nvidiavaapidriverlatest=$(curl -s https://api.github.com/repos/elFarto/nvidia-vaapi-driver/tags | grep -o "\"name\".*" | head -n1 | grep -oP '([0-9]+\.?)+')
+[[ $nvidiavaapidriverlatest != "$nvidiavaapidrivergentoo" ]] &&
+	outdatedarray+=( "nvidia-vaapi-driver ${OUT} https://github.com/elFarto/nvidia-vaapi-driver" )
 
 openh264latest=$(curl -s https://api.github.com/repos/cisco/openh264/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
 [[ $openh264latest != "$openh264gentoo" ]] &&
