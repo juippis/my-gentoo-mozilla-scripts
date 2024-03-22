@@ -2,7 +2,7 @@
 
 ### Requirements: app-portage/pkg-testing-tools
 ### Recommended: a container.
-###   (https://wiki.gentoo.org/wiki/User:Juippis/The_ultimate_testing_system_with_lxd)
+###   (https://wiki.gentoo.org/wiki/Incus/Gentoo_Github_pullrequest_testing)
 ###
 ### Input: test_mozilla_products-x86.sh app-category/package-version
 ### Example: test_mozilla_products-x86.sh www-client/firefox-90.0.1
@@ -35,5 +35,5 @@ pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'te
 	--append-required-use '!lto !pgo' --max-use-combinations 4 -p "=${1}"
 unset USE
 
-errors_and_qa_notices.sh
+gentoo_pkg_errors_and_qa_notices.sh
 grep -r exit_code /var/tmp/portage/vbslogs/ | grep "1,"
