@@ -25,6 +25,9 @@ OUT="${RED}out of date, visit${DEF}"
 outdatedarray=()
 pkgcheckscanpackages=()
 
+# Curl arguments, where user agent needs to be changed.
+curlagentargs="-A \"Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0\""
+
 # Basic function to cover most cases. Strip out:
 #  - any *9999* versions,
 #  - "[I]" which means the version is currently installed in host system,
@@ -66,7 +69,7 @@ if ! grep -q "${firefoxesrlatest}" < <(equery y www-client/firefox); then
 	outdatedarray+=( "	https://github.com/mozilla/release-notes/blob/master/releases/firefox-${firefoxesrlatest}-esr.json" )
 fi
 
-firefoxrapidlatest=$(curl -s "https://repology.org/project/firefox/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+firefoxrapidlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/firefox/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $firefoxrapidlatest != "$firefoxrapidgentoo" ]] && 
 	outdatedarray+=( "Firefox-rapid ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxrapidlatest}" ) &&
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxrapidlatest}/releasenotes/" ) && 
@@ -76,7 +79,7 @@ librnplatest=$(curl -s https://api.github.com/repos/rnpgp/rnp/releases/latest | 
 [[ $librnplatest != "$librnpgentoo" ]] &&
 	outdatedarray+=( "librnp ${OUT} https://github.com/rnpgp/rnp/tags" )
 
-nsprlatest=$(curl -s "https://repology.org/project/nspr/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+nsprlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/nspr/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $nsprlatest != "$nsprgentoo" ]] &&
 	outdatedarray+=( "NSPR ${OUT} https://archive.mozilla.org/pub/nspr/releases/ ${nsprlatest}" )
 
@@ -86,7 +89,7 @@ if ! grep -q "${nssesrlatest}" < <(equery y dev-libs/nss); then
 	outdatedarray+=( "  https://hg.mozilla.org/projects/nss/file/tip/doc/rst/releases" )
 fi
 
-nsslatest=$(curl -s "https://repology.org/project/nss/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+nsslatest=$(curl "${curlagentargs}" -s "https://repology.org/project/nss/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $nsslatest != "$nssgentoo" ]] &&
 	outdatedarray+=( "NSS ${OUT} https://archive.mozilla.org/pub/security/nss/releases/ ${nsslatest}" ) && 
 	outdatedarray+=( "  https://hg.mozilla.org/projects/nss/file/tip/doc/rst/releases" )
@@ -108,11 +111,11 @@ sexpplatest=$(curl -s https://api.github.com/repos/rnpgp/sexpp/releases/latest |
 [[ $sexpplatest != "$sexppgentoo" ]] &&
 	outdatedarray+=( "sexpp ${OUT} https://github.com/rnpgp/sexpp/releases" )
 
-spidermonkeylatest=$(curl -s "https://repology.org/project/spidermonkey/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+spidermonkeylatest=$(curl "${curlagentargs}" -s "https://repology.org/project/spidermonkey/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $spidermonkeylatest != "$spidermonkeygentoo" ]] &&
 	outdatedarray+=( "Spidermonkey ${OUT} https://repology.org/project/spidermonkey/history" )
 
-thunderbirdlatest=$(curl -s "https://repology.org/project/thunderbird/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+thunderbirdlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/thunderbird/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
 [[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
 	outdatedarray+=( "Thunderbird ${OUT} https://archive.mozilla.org/pub/thunderbird/releases/ ${thunderbirdlatest}" ) &&
 	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}/releasenotes/" )
