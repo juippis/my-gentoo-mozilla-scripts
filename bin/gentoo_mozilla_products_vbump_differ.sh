@@ -42,37 +42,6 @@ firefoxdiffarray=(
 	mach
 	Makefile.in
 	aclocal.m4
-	build/build_virtualenv_packages.txt
-	build/common_virtualenv_packages.txt
-	build/docs/
-	build/mach_initialize.py
-	build/mach_virtualenv_packages.txt
-	build/moz.configure
-	build/moz.configure/bootstrap.configure
-	build/zstandard_requirements.in
-	build/zstandard_requirements.txt
-	config/Makefile.in
-	config/baseconfig.mk
-	config/config.mk
-	config/system-headers.mozbuild
-	nsprpub/configure
-	old-configure.in
-	python/docs/index.rst
-	python/mach/mach/site.py
-	python/mozboot/mozboot/base.py
-	python/mozboot/mozboot/util.py
-	python/mozbuild/mozbuild/base.py
-	python/mozbuild/mozbuild/mozinfo.py
-	python/mozbuild/mozbuild/nodeutil.py
-	taskcluster/ci/build/kind.yml
-	taskcluster/ci/build/linux-base-toolchains.yml
-	taskcluster/ci/build/linux.yml
-	taskcluster/ci/instrumented-build/kind.yml
-	taskcluster/docker/debian-base/Dockerfile
-	taskcluster/docker/fetch/Dockerfile
-	taskcluster/scripts/builder/build-l10n.sh
-	taskcluster/scripts/builder/build-linux.sh
-	tools/mach_initialize.py
 	browser/app/moz.build
 	browser/base/moz.build
 	browser/branding/official/locales/moz.build
@@ -86,9 +55,14 @@ firefoxdiffarray=(
 	browser/moz.build
 	browser/moz.configure
 	browser/tools/mozscreenshots/moz.build
+	build/build_virtualenv_packages.txt
+	build/common_virtualenv_packages.txt
+	build/docs/
+	build/mach_initialize.py
+	build/mach_virtualenv_packages.txt
 	build/moz.build
-	build/unix/elfhack/moz.build
-	build/unix/moz.build
+	build/moz.configure
+	build/moz.configure/bootstrap.configure
 	build/moz.configure/flags.configure
 	build/moz.configure/headers.configure
 	build/moz.configure/init.configure
@@ -98,13 +72,21 @@ firefoxdiffarray=(
 	build/moz.configure/old.configure
 	build/moz.configure/toolchain.configure
 	build/moz.configure/update-programs.configure
+	build/unix/elfhack/moz.build
+	build/unix/moz.build
+	build/zstandard_requirements.in
+	build/zstandard_requirements.txt
 	chrome/moz.build
+	config/Makefile.in
+	config/baseconfig.mk
+	config/config.mk
 	config/external/icu/moz.build
 	config/external/moz.build
 	config/external/nspr/moz.build
 	config/external/sqlite/moz.build
 	config/external/zlib/moz.build
 	config/moz.build
+	config/system-headers.mozbuild
 	dom/media/eme/moz.build
 	dom/moz.build
 	gfx/cairo/cairo/src/moz.build
@@ -132,13 +114,30 @@ firefoxdiffarray=(
 	modules/moz.build
 	moz.build
 	moz.configure
+	nsprpub/configure
+	old-configure.in
 	other-licenses/moz.build
+	python/docs/index.rst
+	python/mach/mach/site.py
 	python/moz.build
+	python/mozboot/mozboot/base.py
+	python/mozboot/mozboot/util.py
+	python/mozbuild/mozbuild/base.py
+	python/mozbuild/mozbuild/mozinfo.py
+	python/mozbuild/mozbuild/nodeutil.py
 	security/apps/moz.build
 	security/moz.build
 	servo/moz.build
 	storage/build/moz.build
 	storage/moz.build
+	taskcluster/ci/build/kind.yml
+	taskcluster/ci/build/linux-base-toolchains.yml
+	taskcluster/ci/build/linux.yml
+	taskcluster/ci/instrumented-build/kind.yml
+	taskcluster/docker/debian-base/Dockerfile
+	taskcluster/docker/fetch/Dockerfile
+	taskcluster/scripts/builder/build-l10n.sh
+	taskcluster/scripts/builder/build-linux.sh
 	third_party/moz.build
 	toolkit/components/build/moz.build
 	toolkit/components/moz.build
@@ -146,6 +145,7 @@ firefoxdiffarray=(
 	toolkit/moz.configure
 	tools/crashreporter/injector/moz.configure
 	tools/crashreporter/moz.configure
+	tools/mach_initialize.py
 	tools/moz.build
 	tools/rusttests/moz.configure
 	tools/update-packaging/moz.configure
