@@ -110,7 +110,6 @@ firefoxdiffarray=(
 	memory/build/moz.build
 	memory/moz.build
 	memory/moz.configure
-	mobile/android/moz.configure
 	modules/moz.build
 	moz.build
 	moz.configure
