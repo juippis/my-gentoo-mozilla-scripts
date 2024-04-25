@@ -42,6 +42,7 @@ gentooVersionCheck() {
 # Basic
 cbindgengentoo=$(gentooVersionCheck "dev-util/cbindgen")
 firefoxrapidgentoo=$(gentooVersionCheck "www-client/firefox")
+geckodrivergentoo=$(gentooVersionCheck "net-misc/geckodriver")
 librnpgentoo=$(gentooVersionCheck "dev-util/librnp")
 nsprgentoo=$(gentooVersionCheck "dev-libs/nspr")
 nssgentoo=$(gentooVersionCheck "dev-libs/nss")
@@ -74,6 +75,10 @@ firefoxrapidlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/fi
 	outdatedarray+=( "Firefox-rapid ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxrapidlatest}" ) &&
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxrapidlatest}/releasenotes/" ) && 
 	outdatedarray+=( "	https://github.com/mozilla/release-notes/blob/master/releases/firefox-${firefoxrapidlatest}-release.json" )
+
+geckodriverlatest=$(curl -s https://api.github.com/repos/mozilla/geckodriver/tags | grep -oP '([0-9]+\.?)+' | head -n1)
+[[ $geckodriverlatest != "$geckodrivergentoo" ]] &&
+	outdatedarray+=( "Geckodriver ${OUT} https://github.com/mozilla/geckodriver/releases" )
 
 librnplatest=$(curl -s https://api.github.com/repos/rnpgp/rnp/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
 [[ $librnplatest != "$librnpgentoo" ]] &&
