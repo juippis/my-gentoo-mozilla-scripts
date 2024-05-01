@@ -120,7 +120,7 @@ spidermonkeylatest=$(curl "${curlagentargs}" -s "https://repology.org/project/sp
 [[ $spidermonkeylatest != "$spidermonkeygentoo" ]] &&
 	outdatedarray+=( "Spidermonkey ${OUT} https://repology.org/project/spidermonkey/history" )
 
-thunderbirdlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/thunderbird/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | grep "LATEST_THUNDERBIRD_VERSION" | cut -d \" -f4)
 [[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
 	outdatedarray+=( "Thunderbird ${OUT} https://archive.mozilla.org/pub/thunderbird/releases/ ${thunderbirdlatest}" ) &&
 	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}/releasenotes/" )
