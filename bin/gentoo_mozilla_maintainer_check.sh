@@ -80,7 +80,7 @@ geckodriverlatest=$(curl -s https://api.github.com/repos/mozilla/geckodriver/tag
 [[ $geckodriverlatest != "$geckodrivergentoo" ]] &&
 	outdatedarray+=( "Geckodriver ${OUT} https://github.com/mozilla/geckodriver/releases" )
 
-librnplatest=$(curl -s https://api.github.com/repos/rnpgp/rnp/releases/latest | grep -o "\"tag_name\".*" | grep -oP '([0-9]+\.?)+')
+librnplatest=$(curl -s https://api.github.com/repos/rnpgp/rnp/tags | grep -oP '([0-9]+\.?)+' | head -n1)
 [[ $librnplatest != "$librnpgentoo" ]] &&
 	outdatedarray+=( "librnp ${OUT} https://github.com/rnpgp/rnp/tags" )
 
