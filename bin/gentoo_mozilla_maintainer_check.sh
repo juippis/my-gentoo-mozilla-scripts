@@ -9,6 +9,8 @@
 ### DEVREPO=~/git/gentoo gentoo_mozilla_maintainer_check.sh
 ###  where DEVREPO is the location to your development repository with git history present.
 ###  defaults to `pwd`.
+###
+### Depends on app-misc/jq to parse JSON files reliably.
 
 
 : "${DEVREPO:=$(pwd)}"
@@ -63,14 +65,14 @@ cbindgenlatest=$(curl -s https://api.github.com/repos/mozilla/cbindgen/tags | gr
 
 # Match Firefox-ESR to packaged one in repo:
 # firefoxesrlatest=$(curl -s https://archive.mozilla.org/pub/firefox/releases/ | grep "esr/" | tail -2 | head -1 | grep -oP '(?<=esr/">).*(?=/</a>)' | cut -d"e" -f1)
-firefoxesrlatest=$(curl -sL https://www.mozilla.org/en-US/firefox/organizations/notes/ | grep -oP '(?<=data-esr-versions=").*(?=" data-gtm-cont)')
+firefoxesrlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/firefox_versions.json | jq ".FIREFOX_ESR" | tr -d "'\"" | tr -d "esr")
 if ! grep -q "${firefoxesrlatest}" < <(equery y www-client/firefox); then
 	outdatedarray+=( "Firefox-ESR ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxesrlatest}/esr" )
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxesrlatest}/releasenotes/" ) && 
 	outdatedarray+=( "	https://github.com/mozilla/release-notes/blob/master/releases/firefox-${firefoxesrlatest}-esr.json" )
 fi
 
-firefoxrapidlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/firefox/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+firefoxrapidlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/firefox_versions.json | jq ".LATEST_FIREFOX_VERSION" | tr -d "'\"")
 [[ $firefoxrapidlatest != "$firefoxrapidgentoo" ]] && 
 	outdatedarray+=( "Firefox-rapid ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxrapidlatest}" ) &&
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxrapidlatest}/releasenotes/" ) && 
@@ -116,11 +118,11 @@ sexpplatest=$(curl -s https://api.github.com/repos/rnpgp/sexpp/releases/latest |
 [[ $sexpplatest != "$sexppgentoo" ]] &&
 	outdatedarray+=( "sexpp ${OUT} https://github.com/rnpgp/sexpp/releases" )
 
-spidermonkeylatest=$(curl "${curlagentargs}" -s "https://repology.org/project/spidermonkey/history" | grep -oP '(?<=class="version version-big version-newest">).*(?=</span>)' | head -n1)
+spidermonkeylatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/firefox_versions.json | jq ".FIREFOX_ESR" | tr -d "'\"" | tr -d "esr")
 [[ $spidermonkeylatest != "$spidermonkeygentoo" ]] &&
 	outdatedarray+=( "Spidermonkey ${OUT} https://repology.org/project/spidermonkey/history" )
 
-thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | grep "LATEST_THUNDERBIRD_VERSION" | cut -d \" -f4)
+thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | jq ."LATEST_THUNDERBIRD_VERSION" | tr -d "'\"")
 [[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
 	outdatedarray+=( "Thunderbird ${OUT} https://archive.mozilla.org/pub/thunderbird/releases/ ${thunderbirdlatest}" ) &&
 	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}/releasenotes/" )
