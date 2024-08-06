@@ -48,18 +48,14 @@ firefoxdiffarray=(
 	browser/components/build/moz.build
 	browser/components/moz.build
 	browser/extensions/moz.build
-	browser/extensions/translations/moz.build
 	browser/fonts/moz.build
 	browser/locales/moz.build
 	browser/modules/moz.build
 	browser/moz.build
 	browser/moz.configure
 	browser/tools/mozscreenshots/moz.build
-	build/build_virtualenv_packages.txt
-	build/common_virtualenv_packages.txt
 	build/docs/
 	build/mach_initialize.py
-	build/mach_virtualenv_packages.txt
 	build/moz.build
 	build/moz.configure
 	build/moz.configure/bootstrap.configure
@@ -125,15 +121,10 @@ firefoxdiffarray=(
 	python/mozbuild/mozbuild/base.py
 	python/mozbuild/mozbuild/mozinfo.py
 	python/mozbuild/mozbuild/nodeutil.py
-	security/apps/moz.build
 	security/moz.build
 	servo/moz.build
 	storage/build/moz.build
 	storage/moz.build
-	taskcluster/ci/build/kind.yml
-	taskcluster/ci/build/linux-base-toolchains.yml
-	taskcluster/ci/build/linux.yml
-	taskcluster/ci/instrumented-build/kind.yml
 	taskcluster/docker/debian-base/Dockerfile
 	taskcluster/docker/fetch/Dockerfile
 	taskcluster/scripts/builder/build-l10n.sh
@@ -144,8 +135,7 @@ firefoxdiffarray=(
 	toolkit/moz.build
 	toolkit/moz.configure
 	tools/crashreporter/injector/moz.configure
-	tools/crashreporter/moz.configure
-	tools/mach_initialize.py
+	tools/mach_commands.py
 	tools/moz.build
 	tools/rusttests/moz.configure
 	tools/update-packaging/moz.configure
