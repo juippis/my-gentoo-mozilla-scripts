@@ -125,7 +125,7 @@ spidermonkeylatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/pr
 thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | jq ."LATEST_THUNDERBIRD_VERSION" | tr -d "'\"")
 [[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
 	outdatedarray+=( "Thunderbird ${OUT} https://archive.mozilla.org/pub/thunderbird/releases/ ${thunderbirdlatest}" ) &&
-	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}/releasenotes/" )
+	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}esr/releasenotes/" )
 
 echo ""
 
