@@ -122,10 +122,12 @@ spidermonkeylatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/pr
 [[ $spidermonkeylatest != "$spidermonkeygentoo" ]] &&
 	outdatedarray+=( "Spidermonkey ${OUT} https://repology.org/project/spidermonkey/history" )
 
-thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | jq ."LATEST_THUNDERBIRD_VERSION" | tr -d "'\"")
-[[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
+thunderbirdlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/thunderbird_versions.json | jq ."LATEST_THUNDERBIRD_VERSION" | tr -d "'\"" | sed 's/esr//')
+# [[ $thunderbirdlatest != "$thunderbirdgentoo" ]] &&
+if ! grep -q "${thunderbirdgentoo}" < <(equery y mail-client/thunderbird) ; then
 	outdatedarray+=( "Thunderbird ${OUT} https://archive.mozilla.org/pub/thunderbird/releases/ ${thunderbirdlatest}" ) &&
 	outdatedarray+=( "	https://www.thunderbird.net/en-US/thunderbird/${thunderbirdlatest}esr/releasenotes/" )
+fi
 
 echo ""
 
