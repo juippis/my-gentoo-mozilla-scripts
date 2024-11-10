@@ -2,10 +2,13 @@
 
 ### Requirements: app-portage/pkg-testing-tools
 ### Recommended: a container.
+### With these settings, you'll need "test.conf" and "test-lto.conf" files.
+### Make your own or get them from:
+###  https://github.com/juippis/incus-gentoo-github-pullrequest-tester/tree/master/container/etc/portage/env
 ###   (https://wiki.gentoo.org/wiki/Incus/Gentoo_Github_pullrequest_testing)
 ###
-### Input: test_mozilla_products-amd64.sh app-category/package-version
-### Example: test_mozilla_products-amd64.sh www-client/firefox-90.0.1
+### Input: test_mozilla_firefox_gentoo.sh app-category/package-version
+### Example: test_mozilla_firefox_gentoo.sh www-client/firefox-133.0
 
 ### 
 ### Since 'lto' and 'pgo' are usually the cause for any breakage, split runs to 
@@ -16,40 +19,46 @@
 echo "sys-libs/compiler-rt clang" >> /etc/portage/package.use/compiler-rt
 echo "sys-libs/compiler-rt-sanitizers clang" >> /etc/portage/package.use/compiler-rt
 
-# With clang, get dependencies installed right on the first run
+# With clang, get dependencies installed right on the first run.
 export USE="clang X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
-	--append-required-use '!lto !pgo' --max-use-combinations 0 -p "=${1}"
+	--append-required-use '!pgo' --max-use-combinations 0 -p "=${1}"
 unset USE
 
-# With gcc
+# With gcc.
 export USE="-clang X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-gcc.json \
-	--append-required-use '!lto !pgo' --max-use-combinations 0 -p "=${1}"
+	--append-required-use '!pgo' --max-use-combinations 0 -p "=${1}"
 unset USE
 
-# With gcc+lto+pgo
-export USE="-clang lto pgo X wayland"
+# With gcc+lto+pgo - lto is automatically enabled with 'pgo' use flag.
+export USE="-clang pgo X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-gcc-ltopgo.json \
     --max-use-combinations 0 -p "=${1}"
 unset USE
 
-# with clang+lto+pgo
-export USE="clang lto pgo X wayland"
+# With clang+lto+pgo - lto is automatically enabled with 'pgo' use flag.
+export USE="clang pgo X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang-ltopgo.json \
     --max-use-combinations 0 -p "=${1}"
 unset USE
 
-# With randomized USE flags, usually lto gets tested without pgo here.
-# Skip +pgo since it's been tested already, and to save time.
+# Test with random use flags - no lto.
 export USE="X"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
-	--append-required-use '!pgo' --max-use-combinations 6 -p "=${1}"
+	--append-required-use '!pgo' --max-use-combinations 4 -p "=${1}"
+unset USE
+
+# Finally test with random use flags and with lto.
+export USE="X"
+pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test-lto.conf' \
+	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc-lto.json \
+	--append-required-use '!pgo' --max-use-combinations 4 -p "=${1}"
 unset USE
 
 gentoo_pkg_errors_and_qa_notices.sh
