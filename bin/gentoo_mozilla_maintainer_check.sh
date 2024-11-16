@@ -70,6 +70,7 @@ if ! grep -q "${firefoxesrlatest}" < <(equery y www-client/firefox); then
 	outdatedarray+=( "Firefox-ESR ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxesrlatest}/esr" )
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxesrlatest}/releasenotes/" ) && 
 	outdatedarray+=( "	https://github.com/mozilla/release-notes/blob/master/releases/firefox-${firefoxesrlatest}-esr.json" )
+	outdatedarray+=( "  https://github.com/WebAssembly/wasi-sdk/tags" )
 fi
 
 firefoxrapidlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/product-details/production/public/1.0/firefox_versions.json | jq ".LATEST_FIREFOX_VERSION" | tr -d "'\"")
@@ -77,6 +78,7 @@ firefoxrapidlatest=$(curl -s https://raw.githubusercontent.com/mozilla-releng/pr
 	outdatedarray+=( "Firefox-rapid ${OUT} https://archive.mozilla.org/pub/firefox/releases/ ${firefoxrapidlatest}" ) &&
 	outdatedarray+=( "	https://www.mozilla.org/en-US/firefox/${firefoxrapidlatest}/releasenotes/" ) && 
 	outdatedarray+=( "	https://github.com/mozilla/release-notes/blob/master/releases/firefox-${firefoxrapidlatest}-release.json" )
+	outdatedarray+=( "  https://github.com/WebAssembly/wasi-sdk/tags" )
 
 geckodriverlatest=$(curl -s https://api.github.com/repos/mozilla/geckodriver/tags | grep -oP '([0-9]+\.?)+' | head -n1)
 [[ $geckodriverlatest != "$geckodrivergentoo" ]] &&
