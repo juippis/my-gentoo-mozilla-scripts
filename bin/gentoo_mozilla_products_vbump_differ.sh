@@ -106,7 +106,6 @@ firefoxdiffarray=(
 	memory/build/moz.build
 	memory/moz.build
 	memory/moz.configure
-	modules/libpref/init/StaticPrefList.yaml
 	modules/moz.build
 	moz.build
 	moz.configure
@@ -146,6 +145,7 @@ firefoxdiffarray=(
 	widget/gtk/wayland/moz.build
 	widget/moz.build
 	widget/x11/moz.build
+	modules/libpref/init/StaticPrefList.yaml
 )
 
 nssdiffarray=(
