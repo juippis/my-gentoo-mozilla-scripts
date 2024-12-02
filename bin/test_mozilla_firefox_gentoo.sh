@@ -58,7 +58,7 @@ unset USE
 export USE="X"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test-lto.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc-lto.json \
-	--append-required-use '!pgo' --max-use-combinations 4 -p "=${1}"
+	--append-required-use '!pgo jumbo-build' --max-use-combinations 4 -p "=${1}"
 unset USE
 
 gentoo_pkg_errors_and_qa_notices.sh
