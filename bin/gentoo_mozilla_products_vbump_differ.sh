@@ -211,6 +211,7 @@ thunderbirddiffarray=(
 	comm/mailnews/moz.build
 	comm/mailnews/moz.configure
 	comm/mailnews/news/moz.build
+	comm/python/mach_commands.py
 	comm/python/moz.build
 	comm/suite/app/moz.build
 	comm/suite/base/moz.build
