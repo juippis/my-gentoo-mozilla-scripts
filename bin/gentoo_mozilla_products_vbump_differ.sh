@@ -421,24 +421,30 @@ if [[ ${thunderbirdbump} -eq 1 ]]; then
 	cd "${MOZSHTMPDIR}" || exit
 
 	if [[ ! -d ${1} ]]; then
-		if [[ -f ${DISTDIR}/${1}esr.source.tar.xz ]]; then
+		if [[ -f ${DISTDIR}/${1}.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${1}.source.tar.xz"
+		elif [[ -f ${DISTDIR}/${1}esr.source.tar.xz ]]; then
 			tar xf "${DISTDIR}/${1}esr.source.tar.xz"
 		else
 			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"/source/"${1}".source.tar.xz || exit
 			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"esr/source/"${1}"esr.source.tar.xz || exit
 			cd "${MOZSHTMPDIR}" || exit
-			tar xf "${DISTDIR}/${1}esr.source.tar.xz"
+			tar xf "${DISTDIR}/${1}.source.tar.xz" || tar xf "${DISTDIR}/${1}esr.source.tar.xz"
 		fi
 	fi
 
 	if [[ ! -d ${2} ]]; then
-		if [[ -f ${DISTDIR}/${2}esr.source.tar.xz ]]; then
+		if [[ -f ${DISTDIR}/${2}.source.tar.xz ]]; then
+			tar xf "${DISTDIR}/${2}.source.tar.xz"
+		elif [[ -f ${DISTDIR}/${2}esr.source.tar.xz ]]; then
 			tar xf "${DISTDIR}/${2}esr.source.tar.xz"
 		else
 			cd "${DISTDIR}" || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"/source/"${2}".source.tar.xz || exit
 			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"esr/source/"${2}"esr.source.tar.xz || exit
 			cd "${MOZSHTMPDIR}" || exit
-			tar xf "${DISTDIR}/${2}esr.source.tar.xz"
+			tar xf "${DISTDIR}/${2}.source.tar.xz" || tar xf "${DISTDIR}/${2}esr.source.tar.xz"
 		fi
 	fi
 
