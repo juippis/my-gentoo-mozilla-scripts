@@ -428,8 +428,8 @@ if [[ ${thunderbirdbump} -eq 1 ]]; then
 			tar xf "${DISTDIR}/${1}esr.source.tar.xz"
 		else
 			cd "${DISTDIR}" || exit
-			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"/source/"${1}".source.tar.xz || exit
-			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"esr/source/"${1}"esr.source.tar.xz || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"/source/"${1}".source.tar.xz
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver1}"esr/source/"${1}"esr.source.tar.xz
 			cd "${MOZSHTMPDIR}" || exit
 			tar xf "${DISTDIR}/${1}.source.tar.xz" || tar xf "${DISTDIR}/${1}esr.source.tar.xz"
 		fi
@@ -442,8 +442,8 @@ if [[ ${thunderbirdbump} -eq 1 ]]; then
 			tar xf "${DISTDIR}/${2}esr.source.tar.xz"
 		else
 			cd "${DISTDIR}" || exit
-			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"/source/"${2}".source.tar.xz || exit
-			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"esr/source/"${2}"esr.source.tar.xz || exit
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"/source/"${2}".source.tar.xz
+			wget https://archive.mozilla.org/pub/thunderbird/releases/"${ver2}"esr/source/"${2}"esr.source.tar.xz
 			cd "${MOZSHTMPDIR}" || exit
 			tar xf "${DISTDIR}/${2}.source.tar.xz" || tar xf "${DISTDIR}/${2}esr.source.tar.xz"
 		fi
