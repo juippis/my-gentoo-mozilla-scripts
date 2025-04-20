@@ -20,9 +20,10 @@ echo "sys-libs/compiler-rt clang" >> /etc/portage/package.use/compiler-rt
 echo "sys-libs/compiler-rt-sanitizers clang" >> /etc/portage/package.use/compiler-rt
 
 # With clang, get dependencies installed right on the first run.
+# Run test phase once with default use flags.
 export USE="clang X wayland"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
-	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
+	--test-feature-scope once --report /var/tmp/portage/vbslogs/mzllprdcts-clang.json \
 	--append-required-use '!pgo' --max-use-combinations 0 -p "=${1}"
 unset USE
 
