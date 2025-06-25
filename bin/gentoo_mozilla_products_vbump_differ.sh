@@ -43,6 +43,7 @@ firefoxdiffarray=(
 	Makefile.in
 	aclocal.m4
 	browser/app/moz.build
+	browser/app/profile/firefox.js
 	browser/base/moz.build
 	browser/branding/official/locales/moz.build
 	browser/components/build/moz.build
