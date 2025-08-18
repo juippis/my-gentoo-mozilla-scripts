@@ -122,6 +122,7 @@ firefoxdiffarray=(
 	python/mozbuild/mozbuild/mozinfo.py
 	python/mozbuild/mozbuild/nodeutil.py
 	security/moz.build
+	security/nss/lib/nss/nss.h
 	servo/moz.build
 	storage/build/moz.build
 	storage/moz.build
