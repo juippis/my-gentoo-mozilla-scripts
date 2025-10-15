@@ -30,6 +30,8 @@ pkgcheckscanpackages=()
 # Curl arguments, where user agent needs to be changed.
 curlagentargs="-A \"Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0\""
 
+NSSESRCHANNEL="NSS_3_112"
+
 # Basic function to cover most cases. Strip out:
 #  - any *9999* versions,
 #  - "[I]" which means the version is currently installed in host system,
@@ -92,7 +94,8 @@ nsprlatest=$(curl "${curlagentargs}" -s "https://repology.org/project/nspr/histo
 [[ $nsprlatest != "$nsprgentoo" ]] &&
 	outdatedarray+=( "NSPR ${OUT} https://archive.mozilla.org/pub/nspr/releases/ ${nsprlatest}" )
 
-nssesrlatest=$(curl -s https://firefox-source-docs.mozilla.org/security/nss/releases/index.html | grep "latest ESR" | grep -oP '([0-9]+\.?)+')
+#nssesrlatest=$(curl -s https://firefox-source-docs.mozilla.org/security/nss/releases/index.html | grep "latest ESR" | grep -oP '([0-9]+\.?)+')
+nssesrlatest=$(curl -s https://ftp.mozilla.org/pub/security/nss/releases/ | grep "${NSSESRCHANNEL}" | grep -oP '(?<=">NSS_).*(?=_RTM/</a>)' | sed 's/_/./g' | head -n -1 | tail -n 1)
 if ! grep -q "${nssesrlatest}" < <(equery y dev-libs/nss); then
 	outdatedarray+=( "NSS (ESR) ${OUT} https://wiki.mozilla.org/NSS:Release_Versions ${nssesrlatest}" ) && 
 	outdatedarray+=( "  https://hg.mozilla.org/projects/nss/file/tip/doc/rst/releases" )
