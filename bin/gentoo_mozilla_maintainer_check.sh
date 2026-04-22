@@ -28,7 +28,7 @@ outdatedarray=()
 pkgcheckscanpackages=()
 
 # Curl arguments, where user agent needs to be changed.
-curlagentargs="-A \"Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0\""
+curlagentargs="-A \"Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/140.0\""
 
 # Not used anymore
 # NSSESRCHANNEL="NSS_3_112"
