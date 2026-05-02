@@ -100,6 +100,7 @@ firefoxdiffarray=(
 	media/ffvpx/libavutil/moz.build
 	media/ffvpx/moz.build
 	media/libaom/moz.build
+	media/libpng/moz.yaml
 	media/libvpx/moz.build
 	media/libwebp/moz.build
 	media/libwebp/src/moz/moz.build
