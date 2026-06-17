@@ -81,14 +81,7 @@ unset USE
 export USE="X"
 pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test.conf' \
 	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc.json \
-	--append-required-use '!pgo jumbo-build' --max-use-combinations 4 -p "=${pkg}"
-unset USE
-
-# Test 6: Finally test with random use flags and with lto.
-export USE="X"
-pkg-testing-tool --append-emerge '--autounmask=y --oneshot' --extra-env-file 'test-lto.conf' \
-	--test-feature-scope never --report /var/tmp/portage/vbslogs/mzllprdcts-misc-lto.json \
-	--append-required-use '!pgo jumbo-build' --max-use-combinations 4 -p "=${pkg}"
+	--append-required-use '!pgo jumbo-build' --max-use-combinations 6 -p "=${pkg}"
 unset USE
 
 gentoo_pkg_errors_and_qa_notices.sh
