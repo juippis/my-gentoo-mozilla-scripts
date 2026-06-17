@@ -11,10 +11,10 @@
 ###   (https://wiki.gentoo.org/wiki/Incus/Gentoo_Github_pullrequest_testing)
 ###
 ### Usage: test_mozilla_firefox_gentoo.sh package-version [level (optional)]
-### Example: test_mozilla_firefox_gentoo-max.sh 152.0 
-###          test_mozilla_firefox_gentoo-max.sh 152.0 1
-###          test_mozilla_firefox_gentoo-max.sh 152.0 2
-###          test_mozilla_firefox_gentoo-max.sh 152.0 3
+### Example: test_mozilla_firefox_gentoo.sh 152.0 
+###          test_mozilla_firefox_gentoo.sh 152.0 1
+###          test_mozilla_firefox_gentoo.sh 152.0 2
+###          test_mozilla_firefox_gentoo.sh 152.0 3
 ### Level options:
 ###   1: Compile with default use flags, test with clang and gcc.
 ###   2: Include LTO/PGO with default use flags.
